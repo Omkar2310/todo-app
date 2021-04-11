@@ -1,13 +1,15 @@
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-     <h1>
-      Todo App
-     </h1>
-    </div>
-  );
-}
-
-export default App;
+import React from "react";
+import "./App.scss";
+import { Header } from "./components/layout/Header";
+import { Content } from "./components/layout/Content";
+import { ProjectsProvider, SelectedProjectProvider } from "./context";
+export const App = () => (
+  <SelectedProjectProvider>
+    <ProjectsProvider>
+      <div className="App">
+        <Header />
+        <Content />
+      </div>
+    </ProjectsProvider>
+  </SelectedProjectProvider>
+);
