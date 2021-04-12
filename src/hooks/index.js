@@ -1,7 +1,9 @@
+/* eslint-disable no-nested-ternary */
 import { useState, useEffect } from "react";
-import { firebase } from "../firebase";
 import moment from "moment";
-import { collatedTasksExist } from "../helpers/index";
+import { firebase } from "../firebase";
+import { collatedTasksExist } from "../helpers";
+
 export const useTasks = (selectedProject) => {
   const [tasks, setTasks] = useState([]);
   const [archivedTasks, setArchivedTasks] = useState([]);
@@ -25,8 +27,8 @@ export const useTasks = (selectedProject) => {
         ? (unsubscribe = unsubscribe.where("date", "==", ""))
         : unsubscribe;
 
-    unsubscribe = unsubscribe.onSnapshot((snapShot) => {
-      const newTasks = snapShot.docs.map((task) => ({
+    unsubscribe = unsubscribe.onSnapshot((snapshot) => {
+      const newTasks = snapshot.docs.map((task) => ({
         id: task.id,
         ...task.data(),
       }));
@@ -35,12 +37,11 @@ export const useTasks = (selectedProject) => {
         selectedProject === "NEXT_7"
           ? newTasks.filter(
               (task) =>
-                moment(task.date, "DD/MM/YYYY").diff(moment(), "days") <= 7 &&
-                task.archived != true
+                moment(task.date, "DD-MM-YYYY").diff(moment(), "days") <= 7 &&
+                task.archived !== true
             )
           : newTasks.filter((task) => task.archived !== true)
       );
-
       setArchivedTasks(newTasks.filter((task) => task.archived !== false));
     });
 
@@ -49,9 +50,6 @@ export const useTasks = (selectedProject) => {
 
   return { tasks, archivedTasks };
 };
-
-// const selectedProject=1;
-// const {tasks,archivedTasks } =useTasks(selectedProject);
 
 export const useProjects = () => {
   const [projects, setProjects] = useState([]);
