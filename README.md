@@ -7,5 +7,13 @@ Todoist app using reactjs and Firebase.
 * 3.Can see remaining tasks in Inbox.
 * 4.Also dark mode available.
 
+# Run this project in your system
+
+* Clone the project
+* Update the firebase.js file using your own configuration in firebase console
+* In terminal run npm install
+* run npm start
+* run firebase deploy to host the web app
+
 
 ![Todoist App](demo.gif)
